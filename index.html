@@ -1,241 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harshith G S | Accounting & Finance Portfolio</title>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      background: #f4f6f9;
-      color: #333;
-    }
-    header {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    h2 {
-      color: #203a43;
-      border-left: 5px solid #2c5364;
-      padding-left: 10px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-    ul {
-      line-height: 1.8;
-    }
-    .skills span {
-      display: inline-block;
-      background: #2c5364;
-      color: white;
-      padding: 8px 12px;
-      margin: 5px;
-      border-radius: 20px;
-      font-size: 14px;
-    }
-    footer {
-      background: #203a43;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA Inter 2026 | Exciting Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            /* Vibrant Subject Colors */
+            --c-p1: #4834d4; /* Acc - Deep Blue */
+            --c-p2: #ff4757; /* Law - Bright Red */
+            --c-p3: #2ed573; /* Tax - Neon Green */
+            --c-p4: #ffa502; /* Cost - Vibrant Orange */
+            --c-p5: #9c88ff; /* Audit - Light Purple */
+            --c-p6: #1e90ff; /* FM - Dodger Blue */
+            
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-light: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            /* Exciting Background Image with a dark overlay to make glass pop */
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Header --- */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 6px;
+            background: linear-gradient(90deg, var(--c-p1), var(--c-p2), var(--c-p3), var(--c-p4), var(--c-p5), var(--c-p6));
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        h1 { margin: 0; font-weight: 800; color: #ffffff; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px;}
+        .sub-header { color: var(--text-light); font-weight: 400; margin-top: 5px; font-size: 1.1rem;}
+
+        /* --- Stats Row --- */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            border-bottom: 5px solid transparent;
+        }
+
+        .stat-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
+            background: rgba(30, 41, 59, 0.75);
+        }
+        
+        .stat-card.blue { border-bottom-color: var(--c-p1); }
+        .stat-card.green { border-bottom-color: var(--c-p3); }
+        .stat-card.purple { border-bottom-color: var(--c-p5); }
+        .stat-card.orange { border-bottom-color: var(--c-p4); }
+
+        .stat-val { 
+            display: block; 
+            font-size: 2.8rem; 
+            font-weight: 800; 
+            line-height: 1.2; 
+            text-shadow: 0 0 15px currentColor; /* Makes the numbers glow! */
+        }
+        .stat-label { font-size: 0.95rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 5px; display: block;}
+
+        /* --- Main Content Grid --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; } }
+
+        /* --- Common Card Style --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+        
+        .card-title span { margin-right: 10px; font-size: 1.6rem; }
+
+        /* --- Chart Section --- */
+        .chart-wrapper { position: relative; height: 250px; width: 100%; }
+
+        /* --- Syllabus Accordion --- */
+        .paper-item {
+            margin-bottom: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--glass-border);
+            border-left: 6px solid #ccc;
+            transition: all 0.2s;
+        }
+
+        .paper-item:hover { transform: translateX(5px); background: rgba(255, 255, 255, 0.1); }
+
+        /* Dynamic Border Colors for Papers */
+        .p1 { border-left-color: var(--c-p1); }
+        .p2 { border-left-color: var(--c-p2); }
+        .p3 { border-left-color: var(--c-p3); }
+        .p4 { border-left-color: var(--c-p4); }
+        .p5 { border-left-color: var(--c-p5); }
+        .p6 { border-left-color: var(--c-p6); }
+
+        .paper-btn {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #ffffff;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ffffff;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .topic-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .topic-inner { padding: 15px 20px; }
+
+        .topic-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .topic-row:hover { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.05);}
+
+        .t-check {
+            width: 22px; height: 22px; margin-right: 15px;
+            cursor: pointer; accent-color: var(--c-p3);
+        }
+
+        .t-label { font-size: 0.95rem; cursor: pointer; flex: 1; color: var(--text-light); }
+        .t-check:checked + .t-label { text-decoration: line-through; color: #475569; }
+
+        /* --- Log Form --- */
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.9rem; margin-bottom: 8px; font-weight: 600; color: var(--text-light); }
+        
+        .styled-input {
+            width: 100%;
+            padding: 14px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color-scheme: dark; /* Adapts calendar icon to dark bg */
+        }
+
+        .styled-input:focus { 
+            border-color: var(--c-p6); 
+            box-shadow: 0 0 10px rgba(30, 144, 255, 0.5); 
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-log {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, var(--c-p1), var(--c-p6));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(72, 52, 212, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn-log:hover { 
+            transform: scale(0.98); 
+            box-shadow: 0 2px 10px rgba(72, 52, 212, 0.4);
+        }
+
+        .log-list { margin-top: 15px; max-height: 300px; overflow-y: auto; padding-right: 5px;}
+        
+        /* Scrollbar styling for a cleaner look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px;}
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+        .log-item {
+            display: flex; justify-content: space-between;
+            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem; color: var(--text-light);
+        }
+        .log-score { font-weight: 700; color: var(--c-p6); text-shadow: 0 0 8px rgba(30, 144, 255, 0.5);}
+
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>Harshith G S</h1>
-  <p>Accounts Executive | CA Inter Aspirant | AR, AP & Inventory Accounting</p>
-  <p>Bengaluru, Karnataka | harshiee2122@gmail.com | 7411709054</p>
-  <div style="margin-top:15px;">
-    <a href="https://www.linkedin.com/in/harshiee/" target="_blank" style="display:inline-block;padding:12px 22px;background:#0a66c2;color:#fff;font-weight:bold;border-radius:25px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.2);margin-right:10px;">🔗 LinkedIn</a>
-    <a href="Harshith_G_S_Resume.pdf" download style="display:inline-block;padding:12px 22px;background:#ffcc00;color:#203a43;font-weight:bold;border-radius:25px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.2);">📄 Download Resume (PDF)</a>
-  </div>
-</header>
-
-<section>
-  <h2>Professional Summary</h2>
-  <div class="card">
-    <p>
-      Detail-oriented finance and accounting professional with over one year of hands-on experience in Accounts Receivable, Accounts Payable, Inventory Accounting, and General Ledger support. Experienced in ERP systems, GST & TDS compliance, reconciliations, and month-end close activities. A CA Inter aspirant with strong analytical skills and a continuous learning mindset.
-    </p>
-  </div>
-</section>
-
-<section>
-  <h2>Work Experience</h2>
-
-  <div class="card">
-    <h3>Accounts Executive</h3>
-    <p><strong>Karthika Consulting and Solutions Pvt Ltd</strong></p>
-    <p><strong>Sept 2024 – Dec 2025</strong></p>
-    <ul>
-      <li>Managed daily bookkeeping and supported <strong>Accounts Payable and Accounts Receivable</strong> operations.</li>
-      <li>Prepared and filed <strong>GST returns (GSTR-1, GSTR-3B)</strong> and performed <strong>GSTR-2A/2B reconciliations</strong>.</li>
-      <li>Conducted <strong>monthly bank reconciliations</strong> to ensure accuracy of ledgers.</li>
-      <li>Supported <strong>month-end close activities</strong> by completing reconciliations and updating financial schedules.</li>
-      <li>Maintained accurate ledgers in <strong>Frappe ERP (ERPNXT)</strong> ensuring compliance with accounting standards.</li>
-      <li>Handled <strong>fixed asset accounting</strong>, depreciation posting, and asset register maintenance.</li>
-      <li>Prepared <strong>daily, weekly, and monthly MIS and revenue reports</strong>.</li>
-      <li>Maintained petty cash expenses and supported audit documentation.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Finance Intern</h3>
-    <p><strong>Cynaris Solutions Pvt Ltd</strong></p>
-    <p><strong>Apr 2024 – May 2024</strong></p>
-    <ul>
-      <li>Processed and tracked invoices, <strong>TDS workings</strong>, and assisted in budget preparation.</li>
-      <li>Supported the finance team in <strong>accurate GST compliance</strong> and filings.</li>
-      <li>Assisted with reconciliations and updating financial records using <strong>Excel and Power BI</strong>.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Accounts & Store Operations</h3>
-    <p><strong>GS Provision Stores</strong> – Koramangala, Bengaluru</p>
-    <p><strong>July 2020 – Sept 2023</strong></p>
-    <ul>
-      <li>Prepared and generated <strong>customer bills</strong> accurately on a daily basis.</li>
-      <li>Recorded and maintained <strong>daily sales entries</strong> in ledger books.</li>
-      <li>Managed and updated <strong>stock statements</strong> ensuring accurate inventory tracking.</li>
-    </ul>
-  </div>
-
-</section>
-
-<section>
-  <h2>Key Accounting Project</h2>
-  <div class="card">
-    <h3>End-to-End Accounting Operations Project (ERP-Based)</h3>
-    <ul>
-      <li>Prepared customer invoices, tracked dispatch, and maintained AR aging reports.</li>
-      <li>Supported customer ledger reconciliation and followed up on outstanding receivables.</li>
-      <li>Processed vendor invoices by verifying PO, GRN, and supporting documents.</li>
-      <li>Performed vendor statement reconciliation and resolved discrepancies.</li>
-      <li>Maintained inventory records and performed stock & job-worker reconciliations.</li>
-      <li>Posted routine journal entries and supported month-end closing activities.</li>
-      <li>Assisted in GST and TDS compliance and compiled audit documentation.</li>
-      <li>Coordinated with Sales, Sourcing, and Operations teams for accounting clarifications.</li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <h2>Key Achievements</h2>
-  <div class="card">
-    <ul>
-      <li>Processed and reconciled <strong>100+ customer and vendor invoices per month</strong> with high accuracy.</li>
-      <li>Improved <strong>AR collections efficiency by ~20%</strong> through timely follow-ups and aging analysis.</li>
-      <li>Completed <strong>monthly bank reconciliations with 100% accuracy</strong>, ensuring error-free ledgers.</li>
-      <li>Supported <strong>GST filings (GSTR-1, GSTR-3B, 2A/2B)</strong> with zero late-fee instances during tenure.</li>
-      <li>Reduced invoice discrepancies by <strong>25%</strong> by strengthening PO–GRN–Invoice verification.</li>
-      <li>Maintained and reconciled <strong>inventory records for 50+ SKUs</strong>, supporting accurate stock reporting.</li>
-      <li>Contributed to <strong>on-time month-end closing</strong> by preparing schedules and reconciliations ahead of deadlines.</li>
-      <li>Automated MIS and reports using <strong>Excel & Power BI</strong>, reducing manual effort by <strong>30%</strong>.</li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <h2>Functional Experience Mapping</h2>
-  <div class="card">
-    <h3>Accounts Receivable (AR)</h3>
-    <ul>
-      <li>Customer invoicing & dispatch tracking</li>
-      <li>Outstanding follow-ups & aging analysis</li>
-      <li>Customer account reconciliation</li>
-      <li>GST compliance & audit schedules</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Accounts Payable (AP)</h3>
-    <ul>
-      <li>Vendor invoice processing with PO & GRN verification</li>
-      <li>Vendor reconciliation & clarification follow-ups</li>
-      <li>Procurement coordination</li>
-      <li>AP audit documentation</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Inventory & General Ledger</h3>
-    <ul>
-      <li>Inventory record maintenance in ERP</li>
-      <li>Stock & cycle count reconciliation</li>
-      <li>Journal entry posting</li>
-      <li>GL reconciliation & month-end schedules</li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <h2>Mini Finance Dashboards</h2>
-  <div class="card">
-    <p><strong>ERP & Excel-Based Finance Dashboards</strong> </p>
-    <ul>
-      <li><strong>Accounts Receivable Dashboard:</strong> AR Aging (0–30 / 31–60 / 61–90 days), outstanding balance tracking, customer-wise dues.</li>
-      <li><strong>Accounts Payable Dashboard:</strong> Vendor-wise payables, due date analysis, PO–GRN–Invoice status tracking.</li>
-      <li><strong>GST Compliance Dashboard:</strong> GSTR-1 vs GSTR-3B summary, 2A/2B reconciliation status, ITC eligibility tracking.</li>
-      <li><strong>Inventory Dashboard:</strong> Opening vs closing stock, inward/outward movement, variance and slow-moving items.</li>
-      <li><strong>Month-End Close Tracker:</strong> Bank reconciliation status, journal entry checklist, schedule completion tracker.</li>
-    </ul>
-    <p style="margin-top:10px;"><em>Sample dashboards created using Excel-style data modeling and Power BI concepts.</em></p>
+<div class="dashboard-container">
     
-  </div>
-</section>
+    <header>
+        <h1>🚀 CA Inter Tracker</h1>
+        <div class="sub-header">Jan 2026 - June 2026 Exam Prep</div>
+        <button id="loginBtn" class="badge" style="cursor: pointer; margin-top: 15px; border: 1px solid white;">Sign in with Google</button>
+        <button id="logoutBtn" class="badge" style="cursor: pointer; margin-top: 15px; border: 1px solid white; display: none;">Sign Out</button>
+    </header>
 
-<section>
-  <h2>Skills & Tools</h2>
-  <div class="card skills">
-    <span>Accounts Receivable</span>
-    <span>Accounts Payable</span>
-    <span>Inventory Accounting</span>
-    <span>General Ledger</span>
-    <span>GST & TDS</span>
-    <span>ERP Systems</span>
-    <span>Excel (Advanced)</span>
-    <span>Zoho Books</span>
-    <span>Tally</span>
-    <span>Power BI (Basic)</span>
-  </div>
-</section>
+    <div class="stats-row">
+        <div class="stat-card blue">
+            <span class="stat-val" id="daysVal" style="color: var(--c-p1)">0</span>
+            <span class="stat-label">Days Left</span>
+        </div>
+        <div class="stat-card green">
+            <span class="stat-val" id="sylVal" style="color: var(--c-p3)">0%</span>
+            <span class="stat-label">Syllabus Done</span>
+        </div>
+        <div class="stat-card orange">
+            <span class="stat-val" id="hrsVal" style="color: var(--c-p4)">0</span>
+            <span class="stat-label">Total Hours</span>
+        </div>
+        <div class="stat-card purple">
+            <span class="stat-val" id="avgVal" style="color: var(--c-p5)">0</span>
+            <span class="stat-label">Avg Hrs/Day</span>
+        </div>
+    </div>
 
-<section>
-  <h2>Education & Certification</h2>
-  <div class="card">
-    <ul>
-      <li><strong>Bachelor of Commerce (B.Com)</strong> – Finance & HR<br>
-          Community Institute of Commerce and Management Studies, Bangalore City University<br>
-          <em>Sept 2021 – July 2024 | CGPA: 8.6</em>
-      </li>
-      <li><strong>CA Intermediate Aspirant</strong> (Direct Entry)</li>
-      <li><strong>PUC – Commerce (MSBA)</strong> – 81%<br>
-          St. Joseph’s Pre-University College, Karnataka Board<br>
-          <em>May 2019 – March 2021</em>
-      </li>
-    </ul>
-  </div>
-</section>
+    <div class="grid-layout">
+        
+        <div class="left-col">
+            
+            <div class="card">
+                <div class="card-title"><span>📊</span> Analytics</div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h4 style="text-align:center; margin-bottom:10px; font-size: 0.95rem; color: var(--text-light);">Topic Completion</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="syllabusChart"></canvas>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <h4 style="text-align:center; margin-bottom:10px; font-size: 0.95rem; color: var(--text-light);">Last 7 Days Trend</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<footer>
-  <p>© 2025 Harshith G S | Finance & Accounting Portfolio</p>
-</footer>
+            <div class="card">
+                <div class="card-title"><span>📚</span> Detailed Syllabus Tracker</div>
+                <div id="syllabusRoot"></div>
+            </div>
+
+        </div>
+
+        <div class="right-col">
+            <div class="card" style="position: sticky; top: 20px;">
+                <div class="card-title"><span>⏱️</span> Daily Log</div>
+                
+                <form id="logForm">
+                    <div class="input-group">
+                        <label>Date</label>
+                        <input type="date" id="logDate" class="styled-input">
+                    </div>
+                    <div class="input-group">
+                        <label>Hours Studied</label>
+                        <input type="number" id="logHours" step="0.5" class="styled-input" placeholder="e.g. 6.5">
+                    </div>
+                    <button type="submit" class="btn-log">Log Focus Session</button>
+                </form>
+
+                <div style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <h4 style="margin: 0 0 10px 0; font-size: 1rem; color: white;">Recent Sessions</h4>
+                    <div class="log-list" id="logHistory"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="module">
+    // --- FIREBASE IMPORTS ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+    // --- PASTE YOUR FIREBASE CONFIG HERE ---
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase, Firestore, and Auth
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    
+    let currentUserDocRef = null;
+
+    // --- 1. DATA CONFIGURATION ---
+    const SYLLABUS = [
+        {
+            name: "Paper 1: Adv Accounting",
+            color: "p1", 
+            topics: [
+                "Basics & Intro to AS", "Financial Statement of Companies", "Buyback of Securities",
+                "Reconstruction of Companies", "Framework for FS", "Applicability of AS",
+                "Assets Based AS", "Presentation Based AS", "Liabilities Based AS",
+                "Items impacting FS AS", "Revenue-Based AS", "Other AS",
+                "Consolidated FS", "Amalgamation", "Branch Accounting"
+            ]
+        },
+        {
+            name: "Paper 2: Corporate Laws",
+            color: "p2",
+            topics: [
+                "Preliminary", "Incorporation", "Prospectus & Allotment", "Share Capital & Debentures",
+                "Management & Admin", "Deposits", "Charges", "Dividends", "Accounts",
+                "Audit & Auditors", "Foreign Companies", "LLP Act", "General Clauses Act",
+                "Interpretation of Statutes", "FEMA"
+            ]
+        },
+        {
+            name: "Paper 3: Taxation",
+            color: "p3",
+            topics: [
+                "Basic Concepts", "Residential Status", "Salaries", "House Property",
+                "PGBP", "Capital Gains", "Other Sources", "Deductions", "Set Off & Carry Forward",
+                "Advance Tax & TDS", "Filing Returns", "Total Income Computation",
+                "GST Intro & Supply", "Charge of GST", "Place of Supply", "Exemptions",
+                "Value of Supply", "ITC", "Registration", "Tax Invoice", "Accounts & Records",
+                "Payment of Tax", "TDS/TCS (GST)", "E-Way Bill", "GST Returns"
+            ]
+        },
+        {
+            name: "Paper 4: Cost & Mgmt Acc",
+            color: "p4",
+            topics: [
+                "Intro to Costing", "Material Cost", "Employee Cost", "Overheads", "ABC",
+                "Cost Sheet", "Cost Acc System", "Unit & Batch Costing", "Process Costing",
+                "Joint & By Products", "Service Costing", "Standard Costing", "Marginal Costing",
+                "Budgetary Control"
+            ]
+        },
+        {
+            name: "Paper 5: Auditing",
+            color: "p5",
+            topics: [
+                "Nature & Scope", "Audit Strategy", "Risk Assessment", "Audit Evidence",
+                "Audit of FS Items", "Documentation", "Completion & Review", "Audit Report",
+                "Special Entities", "Bank Audit", "Ethics"
+            ]
+        },
+        {
+            name: "Paper 6: FM & SM",
+            color: "p6",
+            topics: [
+                "FM Scope & Objectives", "Ratio Analysis", "Cost of Capital", "Capital Structure",
+                "Leverages", "Investment Decisions", "Working Capital", "Dividend Decisions",
+                "SM Intro", "Ext Environment Analysis", "Int Environment Analysis",
+                "Strategic Choices", "Strategy Implementation"
+            ]
+        }
+    ];
+
+    // --- 2. STATE ---
+    let checklist = {};
+    let logs = [];
+    let charts = {};
+
+    // Chart defaults for Glassmorphism
+    Chart.defaults.color = '#cbd5e1'; 
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // --- 3. INIT & AUTH LOGIC ---
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('logDate').valueAsDate = new Date();
+        renderSyllabus();
+        renderLogs();
+        updateDashboard();
+    });
+
+    // Handle Login
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        signInWithPopup(auth, provider);
+    });
+
+    // Handle Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        signOut(auth);
+    });
+
+    // Listen for Auth State Changes
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // Logged in
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('logoutBtn').style.display = 'inline-block';
+            
+            currentUserDocRef = doc(db, "trackers", user.uid); 
+            
+            try {
+                const docSnap = await getDoc(currentUserDocRef);
+                if (docSnap.exists()) {
+                    const cloudData = docSnap.data();
+                    checklist = cloudData.checklist || {};
+                    logs = cloudData.logs || [];
+                } else {
+                    checklist = {};
+                    logs = [];
+                }
+            } catch (error) {
+                console.error("Error loading from cloud:", error);
+            }
+            
+            renderSyllabus();
+            renderLogs();
+            updateDashboard();
+
+        } else {
+            // Logged out
+            document.getElementById('loginBtn').style.display = 'inline-block';
+            document.getElementById('logoutBtn').style.display = 'none';
+            
+            currentUserDocRef = null;
+            checklist = {};
+            logs = [];
+            
+            renderSyllabus();
+            renderLogs();
+            updateDashboard();
+        }
+    });
+
+    // Helper to save to cloud
+    async function saveToCloud() {
+        if (!currentUserDocRef) {
+            alert("Please sign in to save your progress!");
+            return;
+        }
+        try {
+            await setDoc(currentUserDocRef, { checklist: checklist, logs: logs }, { merge: true });
+        } catch (error) {
+            console.error("Error saving to cloud:", error);
+        }
+    }
+
+    // --- 4. RENDERERS ---
+    function renderSyllabus() {
+        const root = document.getElementById('syllabusRoot');
+        root.innerHTML = '';
+
+        SYLLABUS.forEach((paper, pIdx) => {
+            const total = paper.topics.length;
+            const done = paper.topics.filter((_, tIdx) => checklist[`${pIdx}-${tIdx}`]).length;
+            
+            const div = document.createElement('div');
+            div.className = `paper-item ${paper.color}`;
+            
+            div.innerHTML = `
+                <button class="paper-btn" onclick="toggleAccordion(this)">
+                    ${paper.name}
+                    <span class="badge">${done}/${total}</span>
+                </button>
+                <div class="topic-container">
+                    <div class="topic-inner">
+                        ${paper.topics.map((t, tIdx) => `
+                            <div class="topic-row">
+                                <input type="checkbox" class="t-check" 
+                                    id="c-${pIdx}-${tIdx}" 
+                                    ${checklist[`${pIdx}-${tIdx}`] ? 'checked' : ''}
+                                    onchange="toggleTopic(${pIdx}, ${tIdx})">
+                                <label class="t-label" for="c-${pIdx}-${tIdx}">${t}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            root.appendChild(div);
+        });
+    }
+
+    function toggleAccordion(btn) {
+        const content = btn.nextElementSibling;
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            document.querySelectorAll('.topic-container').forEach(el => el.style.maxHeight = null);
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+    }
+
+    function toggleTopic(pIdx, tIdx) {
+        if (!currentUserDocRef) {
+            alert("Please sign in to save your progress!");
+            const checkbox = document.getElementById(`c-${pIdx}-${tIdx}`);
+            checkbox.checked = !checkbox.checked; // Revert visually
+            return;
+        }
+
+        const key = `${pIdx}-${tIdx}`;
+        if (checklist[key]) delete checklist[key];
+        else checklist[key] = true;
+        
+        saveToCloud();
+        renderSyllabus(); 
+        updateDashboard(); 
+        
+        setTimeout(() => {
+            const papers = document.querySelectorAll('.paper-item');
+            const btn = papers[pIdx].querySelector('.paper-btn');
+            const content = btn.nextElementSibling;
+            content.style.maxHeight = content.scrollHeight + "px";
+        }, 50);
+    }
+
+    // Assigning to window so HTML inline handlers (onclick, onchange) can find them
+    window.toggleAccordion = toggleAccordion;
+    window.toggleTopic = toggleTopic;
+
+    // --- 5. LOGGING ---
+    document.getElementById('logForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!currentUserDocRef) {
+            alert("Please sign in to log a session!");
+            return;
+        }
+
+        const date = document.getElementById('logDate').value;
+        const hours = parseFloat(document.getElementById('logHours').value);
+        
+        if(!date || isNaN(hours)) return;
+
+        logs.push({ date, hours });
+        logs.sort((a,b) => new Date(b.date) - new Date(a.date));
+        
+        saveToCloud();
+        renderLogs();
+        updateDashboard();
+        e.target.reset();
+        document.getElementById('logDate').valueAsDate = new Date();
+    });
+
+    function renderLogs() {
+        const container = document.getElementById('logHistory');
+        container.innerHTML = logs.slice(0, 10).map(l => `
+            <div class="log-item">
+                <span>${new Date(l.date).toLocaleDateString('en-GB')}</span>
+                <span class="log-score">${l.hours}h</span>
+            </div>
+        `).join('');
+    }
+
+    // --- 6. DASHBOARD LOGIC ---
+    function updateDashboard() {
+        // Updated calculation date
+        const end = new Date("2026-07-31");
+        const today = new Date();
+        const daysLeft = Math.ceil((end - today)/(1000*60*60*24));
+        
+        let totalTopics = 0, doneTopics = 0;
+        SYLLABUS.forEach((p, pIdx) => {
+            p.topics.forEach((_, tIdx) => {
+                totalTopics++;
+                if(checklist[`${pIdx}-${tIdx}`]) doneTopics++;
+            });
+        });
+
+        const totalHours = logs.reduce((a, b) => a + b.hours, 0);
+        const avgHours = logs.length ? (totalHours / logs.length).toFixed(1) : 0;
+
+        document.getElementById('daysVal').innerText = Math.max(0, daysLeft);
+        document.getElementById('sylVal').innerText = Math.round((doneTopics/totalTopics)*100) + '%';
+        document.getElementById('hrsVal').innerText = totalHours;
+        document.getElementById('avgVal').innerText = avgHours;
+
+        updateCharts();
+    }
+
+    function updateCharts() {
+        // 1. Polar Area / Pie Chart for Subjects
+        const subjectData = SYLLABUS.map((p, pIdx) => {
+            const pTotal = p.topics.length;
+            const pDone = p.topics.filter((_, tIdx) => checklist[`${pIdx}-${tIdx}`]).length;
+            return Math.round((pDone/pTotal)*100);
+        });
+
+        if(charts.syllabus) charts.syllabus.destroy();
+        charts.syllabus = new Chart(document.getElementById('syllabusChart'), {
+            type: 'polarArea',
+            data: {
+                labels: ['Acc', 'Law', 'Tax', 'Cost', 'Audit', 'FM'],
+                datasets: [{
+                    data: subjectData,
+                    backgroundColor: [
+                        'rgba(72, 52, 212, 0.8)',
+                        'rgba(255, 71, 87, 0.8)',
+                        'rgba(46, 213, 115, 0.8)',
+                        'rgba(255, 165, 2, 0.8)',
+                        'rgba(156, 136, 255, 0.8)',
+                        'rgba(30, 144, 255, 0.8)'
+                    ],
+                    borderWidth: 2,
+                    borderColor: 'rgba(15, 23, 42, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { 
+                    r: { 
+                        ticks: { display: false },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } 
+                    } 
+                },
+                plugins: { legend: { position: 'right', labels: { boxWidth: 12, color: '#fff' } } }
+            }
+        });
+
+        // 2. Bar Chart for History (Last 7 Days)
+        const last7Days = [];
+        const dayLabels = [];
+        for(let i=6; i>=0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dStr = d.toISOString().split('T')[0];
+            dayLabels.push(d.toLocaleDateString('en-GB', {weekday:'short'}));
+            
+            const dayLog = logs.filter(l => l.date === dStr).reduce((a,b)=>a+b.hours,0);
+            last7Days.push(dayLog);
+        }
+
+        if(charts.trend) charts.trend.destroy();
+        charts.trend = new Chart(document.getElementById('trendChart'), {
+            type: 'bar',
+            data: {
+                labels: dayLabels,
+                datasets: [{
+                    label: 'Hours',
+                    data: last7Days,
+                    backgroundColor: 'rgba(30, 144, 255, 0.8)',
+                    borderRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#cbd5e1' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#cbd5e1' }
+                    }
+                }
+            }
+        });
+    }
+</script>
 
 </body>
-</html>
+</html> 
