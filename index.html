@@ -3,73 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CA Inter 2026 | Exciting Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>CA Inter 2026 | Tracker Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            /* Vibrant Subject Colors */
-            --c-p1: #4834d4; /* Acc - Deep Blue */
-            --c-p2: #ff4757; /* Law - Bright Red */
-            --c-p3: #2ed573; /* Tax - Neon Green */
-            --c-p4: #ffa502; /* Cost - Vibrant Orange */
-            --c-p5: #9c88ff; /* Audit - Light Purple */
-            --c-p6: #1e90ff; /* FM - Dodger Blue */
-            
-            /* Glassmorphism Variables */
-            --glass-bg: rgba(15, 23, 42, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-light: #cbd5e1;
+            --primary: #0A2540;
+            --primary-soft: rgba(10, 37, 64, 0.07);
+            --accent: #D4AF37;
+            --accent-soft: rgba(212, 175, 55, 0.13);
+            --accent-gradient: linear-gradient(135deg, #E6C265, #D4AF37);
+            --bg: #f4f6f9;
+            --surface: #ffffff;
+            --surface-alt: #f8fafc;
+            --text: #0f172a;
+            --muted: #5a6a82;
+            --border: rgba(10, 37, 64, 0.09);
+            --shadow: 0 4px 24px rgba(10, 37, 64, 0.07);
+            --shadow-md: 0 8px 36px rgba(10, 37, 64, 0.11);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --radius-pill: 999px;
+            --font-heading: "Playfair Display", serif;
+            --font-body: "Poppins", sans-serif;
+            --font-read: "Inter", sans-serif;
+            --transition: 0.28s ease;
         }
 
-        * { box-sizing: border-box; outline: none; }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
         body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Poppins', sans-serif;
-            /* Exciting Background Image with a dark overlay to make glass pop */
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), 
-                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
-            background-size: cover;
-            color: var(--text-main);
+            font-family: var(--font-read);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
             min-height: 100vh;
         }
 
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* --- Header --- */
+        /* --- HEADER --- */
         header {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            text-align: center;
+            position: sticky; top: 0; z-index: 200;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 16px rgba(10,37,64,0.05);
             margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
+        }
+        .nav {
+            display: flex; align-items: center; justify-content: space-between;
+            height: 72px; max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+        }
+        .brand {
+            font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem;
+            color: var(--primary); display: flex; align-items: center; gap: 10px;
+            text-decoration: none;
+        }
+        .brand span { color: var(--accent); }
+
+        /* --- BUTTONS --- */
+        .btn {
+            border-radius: var(--radius-pill); padding: 0.65rem 1.5rem;
+            font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none;
+            font-family: var(--font-body); letter-spacing: 0.03em;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all var(--transition);
+        }
+        .btn-primary {
+            background: var(--accent-gradient); color: var(--primary);
+            box-shadow: 0 4px 16px var(--accent-soft);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(212,175,55,0.3); filter: brightness(1.04); }
+        .btn-outline {
+            background: transparent; color: var(--primary);
+            border: 1.5px solid var(--border);
+        }
+        .btn-outline:hover { background: var(--primary-soft); border-color: var(--primary); }
+
+        /* --- AUTH PORTAL --- */
+        #authPortal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            padding: 20px;
         }
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 6px;
-            background: linear-gradient(90deg, var(--c-p1), var(--c-p2), var(--c-p3), var(--c-p4), var(--c-p5), var(--c-p6));
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        .auth-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
         }
 
-        h1 { margin: 0; font-weight: 800; color: #ffffff; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px;}
-        .sub-header { color: var(--text-light); font-weight: 400; margin-top: 5px; font-size: 1.1rem;}
+        .auth-card h2 { 
+            font-family: var(--font-heading); 
+            color: var(--primary); 
+            font-size: 1.8rem; 
+            margin-bottom: 5px; 
+            font-weight: 700;
+        }
+        .auth-card p.sub { color: var(--muted); margin-bottom: 30px; font-size: 0.95rem; font-family: var(--font-read); }
+        .auth-error { color: #b91c1c; font-size: 0.85rem; margin-top: 15px; display: none; font-weight: 600; background: #fee2e2; padding: 8px; border-radius: var(--radius-sm);}
 
-        /* --- Stats Row --- */
+        /* --- MAIN DASHBOARD CONTAINER --- */
+        .dashboard-container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+            display: none; 
+        }
+
+        /* --- STATS ROW --- */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -78,258 +133,235 @@
         }
 
         .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
             text-align: center;
-            border: 1px solid var(--glass-border);
-            border-bottom: 5px solid transparent;
+            transition: transform var(--transition);
         }
-
-        .stat-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
-            background: rgba(30, 41, 59, 0.75);
-        }
-        
-        .stat-card.blue { border-bottom-color: var(--c-p1); }
-        .stat-card.green { border-bottom-color: var(--c-p3); }
-        .stat-card.purple { border-bottom-color: var(--c-p5); }
-        .stat-card.orange { border-bottom-color: var(--c-p4); }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 
         .stat-val { 
             display: block; 
-            font-size: 2.8rem; 
-            font-weight: 800; 
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            font-family: var(--font-heading);
+            color: var(--primary);
             line-height: 1.2; 
-            text-shadow: 0 0 15px currentColor; /* Makes the numbers glow! */
         }
-        .stat-label { font-size: 0.95rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 5px; display: block;}
+        .stat-label { 
+            font-size: 0.85rem; 
+            color: var(--muted); 
+            font-weight: 600; 
+            font-family: var(--font-body);
+            text-transform: uppercase; 
+            letter-spacing: 0.08em; 
+            margin-top: 5px; 
+            display: block;
+        }
 
-        /* --- Main Content Grid --- */
+        /* --- MAIN CONTENT GRID --- */
         .grid-layout {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 25px;
+            gap: 2rem;
+            align-items: start;
         }
-
         @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; } }
 
-        /* --- Common Card Style --- */
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            margin-bottom: 25px;
+        /* --- SECTION BLOCKS (CARDS) --- */
+        .section-block {
+            background: var(--surface); 
+            border-radius: var(--radius);
+            border: 1px solid var(--border); 
+            padding: 2.2rem 2.5rem;
+            margin-bottom: 1.5rem; 
+            box-shadow: var(--shadow);
         }
 
-        .card-title {
-            font-size: 1.3rem;
+        .section-block h2 {
+            font-family: var(--font-body); 
+            font-size: 1.35rem; 
             font-weight: 700;
-            margin-bottom: 20px;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 10px;
+            color: var(--primary); 
+            margin-bottom: 1.5rem;
+            display: flex; 
+            align-items: center; 
+            gap: 0.6rem;
+            padding-bottom: 0.75rem; 
+            border-bottom: 2px solid var(--accent-soft);
         }
-        
-        .card-title span { margin-right: 10px; font-size: 1.6rem; }
+        .section-block h2 .h2-icon { color: var(--accent); }
 
-        /* --- Chart Section --- */
+        /* --- CHART WRAPPER --- */
         .chart-wrapper { position: relative; height: 250px; width: 100%; }
 
-        /* --- Syllabus Accordion --- */
+        /* --- SYLLABUS ACCORDION --- */
         .paper-item {
-            margin-bottom: 15px;
-            border-radius: 12px;
+            border: 1px solid var(--border); 
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem; 
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid var(--glass-border);
-            border-left: 6px solid #ccc;
-            transition: all 0.2s;
+            transition: box-shadow var(--transition);
         }
-
-        .paper-item:hover { transform: translateX(5px); background: rgba(255, 255, 255, 0.1); }
-
-        /* Dynamic Border Colors for Papers */
-        .p1 { border-left-color: var(--c-p1); }
-        .p2 { border-left-color: var(--c-p2); }
-        .p3 { border-left-color: var(--c-p3); }
-        .p4 { border-left-color: var(--c-p4); }
-        .p5 { border-left-color: var(--c-p5); }
-        .p6 { border-left-color: var(--c-p6); }
+        .paper-item:hover { box-shadow: var(--shadow); }
 
         .paper-btn {
-            width: 100%;
-            padding: 18px 20px;
-            text-align: left;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: #ffffff;
+            width: 100%; background: var(--surface); border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 1.4rem; text-align: left;
+            font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; color: var(--primary);
+            transition: background var(--transition);
         }
-
+        .paper-btn:hover { background: var(--primary-soft); }
+        
         .badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #ffffff;
-            font-weight: 600;
-            backdrop-filter: blur(5px);
+            background: var(--accent-soft);
+            color: #6b4e00;
+            padding: 0.3rem 0.85rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+            font-weight: 700;
         }
 
         .topic-container {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out;
-            background: rgba(0, 0, 0, 0.2);
+            transition: max-height 0.35s ease;
+            background: var(--surface-alt);
         }
 
-        .topic-inner { padding: 15px 20px; }
+        .topic-inner { padding: 0.5rem 1.4rem 1.2rem; }
 
         .topic-row {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
             transition: background 0.2s;
-            border: 1px solid transparent;
         }
-
-        .topic-row:hover { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.05);}
+        .topic-row:last-child { border-bottom: none; }
 
         .t-check {
-            width: 22px; height: 22px; margin-right: 15px;
-            cursor: pointer; accent-color: var(--c-p3);
+            width: 18px; height: 18px; margin-right: 12px;
+            cursor: pointer; accent-color: var(--accent);
         }
 
-        .t-label { font-size: 0.95rem; cursor: pointer; flex: 1; color: var(--text-light); }
-        .t-check:checked + .t-label { text-decoration: line-through; color: #475569; }
+        .t-label { font-size: 0.93rem; cursor: pointer; flex: 1; color: var(--muted); font-family: var(--font-read);}
+        .t-check:checked + .t-label { text-decoration: line-through; color: #94a3b8; }
 
-        /* --- Log Form --- */
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 0.9rem; margin-bottom: 8px; font-weight: 600; color: var(--text-light); }
+        /* --- FORMS & INPUTS --- */
+        .input-group { margin-bottom: 1.2rem; text-align: left; }
+        .input-group label { 
+            display: block; font-size: 0.85rem; margin-bottom: 6px; 
+            font-weight: 600; color: var(--primary); font-family: var(--font-body); 
+        }
         
         .styled-input {
             width: 100%;
-            padding: 14px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            color: white;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            color-scheme: dark; /* Adapts calendar icon to dark bg */
+            padding: 0.7rem 1rem;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-read);
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: all 0.3s;
         }
-
         .styled-input:focus { 
-            border-color: var(--c-p6); 
-            box-shadow: 0 0 10px rgba(30, 144, 255, 0.5); 
-            background: rgba(0, 0, 0, 0.5);
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px var(--primary-soft);
+            background: var(--surface);
         }
 
-        .btn-log {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(45deg, var(--c-p1), var(--c-p6));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(72, 52, 212, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 10px;
-        }
-
-        .btn-log:hover { 
-            transform: scale(0.98); 
-            box-shadow: 0 2px 10px rgba(72, 52, 212, 0.4);
-        }
-
+        /* --- LOG LIST --- */
         .log-list { margin-top: 15px; max-height: 300px; overflow-y: auto; padding-right: 5px;}
         
-        /* Scrollbar styling for a cleaner look */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px;}
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+        ::-webkit-scrollbar-track { background: var(--bg); border-radius: 10px;}
+        ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 10px; }
 
         .log-item {
-            display: flex; justify-content: space-between;
-            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.95rem; color: var(--text-light);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.8rem 0; border-bottom: 1px solid var(--border);
+            font-size: 0.93rem; color: var(--muted); font-family: var(--font-read);
         }
-        .log-score { font-weight: 700; color: var(--c-p6); text-shadow: 0 0 8px rgba(30, 144, 255, 0.5);}
+        .log-item:last-child { border-bottom: none; }
+        .log-score { font-weight: 700; color: var(--primary); background: var(--primary-soft); padding: 0.2rem 0.6rem; border-radius: 6px; }
 
     </style>
 </head>
 <body>
 
-<div class="dashboard-container">
-    
-    <header>
-        <h1>🚀 CA Inter Tracker</h1>
-        <div class="sub-header">Jan 2026 - June 2026 Exam Prep</div>
-        <button id="loginBtn" class="badge" style="cursor: pointer; margin-top: 15px; border: 1px solid white;">Sign in with Google</button>
-        <button id="logoutBtn" class="badge" style="cursor: pointer; margin-top: 15px; border: 1px solid white; display: none;">Sign Out</button>
-    </header>
+<header>
+    <div class="nav">
+        <div class="brand">
+            growitharshiee<span>.</span> Tracker
+        </div>
+        <button id="logoutBtn" class="btn btn-outline" style="display: none; padding: 0.4rem 1.2rem; font-size: 0.8rem;">
+            Sign Out
+        </button>
+    </div>
+</header>
+
+<div id="authPortal">
+    <div class="auth-card">
+        <h2>CA Portal Login</h2>
+        <p class="sub">Access your tracker and analytics</p>
+        
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="authEmail" class="styled-input" placeholder="student@example.com">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="authPassword" class="styled-input" placeholder="••••••••">
+        </div>
+        
+        <button id="signInBtn" class="btn btn-primary" style="width: 100%; margin-bottom: 12px; margin-top: 10px;">Secure Sign In</button>
+        <button id="signUpBtn" class="btn btn-outline" style="width: 100%;">Create New Account</button>
+        
+        <p id="authError" class="auth-error"></p>
+    </div>
+</div>
+
+<div class="dashboard-container" id="mainDashboard">
 
     <div class="stats-row">
-        <div class="stat-card blue">
-            <span class="stat-val" id="daysVal" style="color: var(--c-p1)">0</span>
+        <div class="stat-card">
+            <span class="stat-val" id="daysVal">0</span>
             <span class="stat-label">Days Left</span>
         </div>
-        <div class="stat-card green">
-            <span class="stat-val" id="sylVal" style="color: var(--c-p3)">0%</span>
+        <div class="stat-card">
+            <span class="stat-val" id="sylVal">0%</span>
             <span class="stat-label">Syllabus Done</span>
         </div>
-        <div class="stat-card orange">
-            <span class="stat-val" id="hrsVal" style="color: var(--c-p4)">0</span>
+        <div class="stat-card">
+            <span class="stat-val" id="hrsVal">0</span>
             <span class="stat-label">Total Hours</span>
         </div>
-        <div class="stat-card purple">
-            <span class="stat-val" id="avgVal" style="color: var(--c-p5)">0</span>
+        <div class="stat-card">
+            <span class="stat-val" id="avgVal">0</span>
             <span class="stat-label">Avg Hrs/Day</span>
         </div>
     </div>
 
     <div class="grid-layout">
-        
         <div class="left-col">
-            
-            <div class="card">
-                <div class="card-title"><span>📊</span> Analytics</div>
+            <div class="section-block">
+                <h2><span class="h2-icon"><i class="fa-solid fa-chart-pie"></i></span> Analytics</h2>
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 250px;">
-                        <h4 style="text-align:center; margin-bottom:10px; font-size: 0.95rem; color: var(--text-light);">Topic Completion</h4>
+                        <h3 style="text-align:center; margin-bottom:15px; font-size: 0.95rem; color: var(--muted); font-family: var(--font-body); font-weight: 600;">Topic Completion</h3>
                         <div class="chart-wrapper">
                             <canvas id="syllabusChart"></canvas>
                         </div>
                     </div>
                     <div style="flex: 1; min-width: 250px;">
-                        <h4 style="text-align:center; margin-bottom:10px; font-size: 0.95rem; color: var(--text-light);">Last 7 Days Trend</h4>
+                        <h3 style="text-align:center; margin-bottom:15px; font-size: 0.95rem; color: var(--muted); font-family: var(--font-body); font-weight: 600;">Last 7 Days Trend</h3>
                         <div class="chart-wrapper">
                             <canvas id="trendChart"></canvas>
                         </div>
@@ -337,16 +369,15 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-title"><span>📚</span> Detailed Syllabus Tracker</div>
+            <div class="section-block">
+                <h2><span class="h2-icon"><i class="fa-solid fa-book-open"></i></span> Syllabus Tracker</h2>
                 <div id="syllabusRoot"></div>
             </div>
-
         </div>
 
         <div class="right-col">
-            <div class="card" style="position: sticky; top: 20px;">
-                <div class="card-title"><span>⏱️</span> Daily Log</div>
+            <div class="section-block" style="position: sticky; top: 100px;">
+                <h2><span class="h2-icon"><i class="fa-regular fa-clock"></i></span> Daily Log</h2>
                 
                 <form id="logForm">
                     <div class="input-group">
@@ -357,144 +388,93 @@
                         <label>Hours Studied</label>
                         <input type="number" id="logHours" step="0.5" class="styled-input" placeholder="e.g. 6.5">
                     </div>
-                    <button type="submit" class="btn-log">Log Focus Session</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Log Session</button>
                 </form>
 
-                <div style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-                    <h4 style="margin: 0 0 10px 0; font-size: 1rem; color: white;">Recent Sessions</h4>
+                <div style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; font-size: 1rem; font-weight: 700; color: var(--primary); font-family: var(--font-body);">Recent Sessions</h3>
                     <div class="log-list" id="logHistory"></div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script type="module">
-    // --- FIREBASE IMPORTS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    // --- PASTE YOUR FIREBASE CONFIG HERE ---
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT.appspot.com",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyASGZIgPh9yJY6cla9sRz1Wrf98woQxw7k",
+        authDomain: "ca-inter-dashboard.firebaseapp.com",
+        projectId: "ca-inter-dashboard",
+        storageBucket: "ca-inter-dashboard.firebasestorage.app",
+        messagingSenderId: "434571308306",
+        appId: "1:434571308306:web:10e0af947d0aea6d6817cb"
     };
 
-    // Initialize Firebase, Firestore, and Auth
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
     
     let currentUserDocRef = null;
 
-    // --- 1. DATA CONFIGURATION ---
-    const SYLLABUS = [
-        {
-            name: "Paper 1: Adv Accounting",
-            color: "p1", 
-            topics: [
-                "Basics & Intro to AS", "Financial Statement of Companies", "Buyback of Securities",
-                "Reconstruction of Companies", "Framework for FS", "Applicability of AS",
-                "Assets Based AS", "Presentation Based AS", "Liabilities Based AS",
-                "Items impacting FS AS", "Revenue-Based AS", "Other AS",
-                "Consolidated FS", "Amalgamation", "Branch Accounting"
-            ]
-        },
-        {
-            name: "Paper 2: Corporate Laws",
-            color: "p2",
-            topics: [
-                "Preliminary", "Incorporation", "Prospectus & Allotment", "Share Capital & Debentures",
-                "Management & Admin", "Deposits", "Charges", "Dividends", "Accounts",
-                "Audit & Auditors", "Foreign Companies", "LLP Act", "General Clauses Act",
-                "Interpretation of Statutes", "FEMA"
-            ]
-        },
-        {
-            name: "Paper 3: Taxation",
-            color: "p3",
-            topics: [
-                "Basic Concepts", "Residential Status", "Salaries", "House Property",
-                "PGBP", "Capital Gains", "Other Sources", "Deductions", "Set Off & Carry Forward",
-                "Advance Tax & TDS", "Filing Returns", "Total Income Computation",
-                "GST Intro & Supply", "Charge of GST", "Place of Supply", "Exemptions",
-                "Value of Supply", "ITC", "Registration", "Tax Invoice", "Accounts & Records",
-                "Payment of Tax", "TDS/TCS (GST)", "E-Way Bill", "GST Returns"
-            ]
-        },
-        {
-            name: "Paper 4: Cost & Mgmt Acc",
-            color: "p4",
-            topics: [
-                "Intro to Costing", "Material Cost", "Employee Cost", "Overheads", "ABC",
-                "Cost Sheet", "Cost Acc System", "Unit & Batch Costing", "Process Costing",
-                "Joint & By Products", "Service Costing", "Standard Costing", "Marginal Costing",
-                "Budgetary Control"
-            ]
-        },
-        {
-            name: "Paper 5: Auditing",
-            color: "p5",
-            topics: [
-                "Nature & Scope", "Audit Strategy", "Risk Assessment", "Audit Evidence",
-                "Audit of FS Items", "Documentation", "Completion & Review", "Audit Report",
-                "Special Entities", "Bank Audit", "Ethics"
-            ]
-        },
-        {
-            name: "Paper 6: FM & SM",
-            color: "p6",
-            topics: [
-                "FM Scope & Objectives", "Ratio Analysis", "Cost of Capital", "Capital Structure",
-                "Leverages", "Investment Decisions", "Working Capital", "Dividend Decisions",
-                "SM Intro", "Ext Environment Analysis", "Int Environment Analysis",
-                "Strategic Choices", "Strategy Implementation"
-            ]
+    const authPortal = document.getElementById('authPortal');
+    const mainDashboard = document.getElementById('mainDashboard');
+    const authError = document.getElementById('authError');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // --- CHART DEFAULTS ---
+    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.color = '#5a6a82'; 
+
+    // --- AUTH LOGIC ---
+    document.getElementById('signInBtn').addEventListener('click', async () => {
+        const email = document.getElementById('authEmail').value;
+        const pass = document.getElementById('authPassword').value;
+        authError.style.display = 'none';
+        
+        if(!email || !pass) {
+            authError.innerText = "Please enter both email and password.";
+            authError.style.display = 'block';
+            return;
         }
-    ];
-
-    // --- 2. STATE ---
-    let checklist = {};
-    let logs = [];
-    let charts = {};
-
-    // Chart defaults for Glassmorphism
-    Chart.defaults.color = '#cbd5e1'; 
-    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
-
-    // --- 3. INIT & AUTH LOGIC ---
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('logDate').valueAsDate = new Date();
-        renderSyllabus();
-        renderLogs();
-        updateDashboard();
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+        } catch (error) {
+            authError.innerText = error.message.replace('Firebase: ', '');
+            authError.style.display = 'block';
+        }
     });
 
-    // Handle Login
-    document.getElementById('loginBtn').addEventListener('click', () => {
-        signInWithPopup(auth, provider);
+    document.getElementById('signUpBtn').addEventListener('click', async () => {
+        const email = document.getElementById('authEmail').value;
+        const pass = document.getElementById('authPassword').value;
+        authError.style.display = 'none';
+        
+        if(!email || !pass) {
+            authError.innerText = "Please enter both email and password.";
+            authError.style.display = 'block';
+            return;
+        }
+        try {
+            await createUserWithEmailAndPassword(auth, email, pass);
+        } catch (error) {
+            authError.innerText = error.message.replace('Firebase: ', '');
+            authError.style.display = 'block';
+        }
     });
 
-    // Handle Logout
-    document.getElementById('logoutBtn').addEventListener('click', () => {
+    logoutBtn.addEventListener('click', () => {
         signOut(auth);
     });
 
-    // Listen for Auth State Changes
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // Logged in
-            document.getElementById('loginBtn').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'inline-block';
-            
+            authPortal.style.display = 'none';
+            mainDashboard.style.display = 'block';
+            logoutBtn.style.display = 'inline-flex';
             currentUserDocRef = doc(db, "trackers", user.uid); 
             
             try {
@@ -507,54 +487,52 @@
                     checklist = {};
                     logs = [];
                 }
-            } catch (error) {
-                console.error("Error loading from cloud:", error);
-            }
+            } catch (error) {}
             
+            document.getElementById('logDate').valueAsDate = new Date();
             renderSyllabus();
             renderLogs();
             updateDashboard();
-
         } else {
-            // Logged out
-            document.getElementById('loginBtn').style.display = 'inline-block';
-            document.getElementById('logoutBtn').style.display = 'none';
-            
+            authPortal.style.display = 'flex';
+            mainDashboard.style.display = 'none';
+            logoutBtn.style.display = 'none';
+            document.getElementById('authPassword').value = '';
             currentUserDocRef = null;
             checklist = {};
             logs = [];
-            
-            renderSyllabus();
-            renderLogs();
-            updateDashboard();
         }
     });
 
-    // Helper to save to cloud
     async function saveToCloud() {
-        if (!currentUserDocRef) {
-            alert("Please sign in to save your progress!");
-            return;
-        }
+        if (!currentUserDocRef) return;
         try {
             await setDoc(currentUserDocRef, { checklist: checklist, logs: logs }, { merge: true });
-        } catch (error) {
-            console.error("Error saving to cloud:", error);
-        }
+        } catch (error) {}
     }
 
-    // --- 4. RENDERERS ---
+    // --- DATA ---
+    const SYLLABUS = [
+        { name: "Paper 1: Adv Accounting", topics: ["Basics & Intro to AS", "Financial Statement of Companies", "Buyback of Securities", "Reconstruction of Companies", "Framework for FS", "Applicability of AS", "Assets Based AS", "Presentation Based AS", "Liabilities Based AS", "Items impacting FS AS", "Revenue-Based AS", "Other AS", "Consolidated FS", "Amalgamation", "Branch Accounting"] },
+        { name: "Paper 2: Corporate Laws", topics: ["Preliminary", "Incorporation", "Prospectus & Allotment", "Share Capital & Debentures", "Management & Admin", "Deposits", "Charges", "Dividends", "Accounts", "Audit & Auditors", "Foreign Companies", "LLP Act", "General Clauses Act", "Interpretation of Statutes", "FEMA"] },
+        { name: "Paper 3: Taxation", topics: ["Basic Concepts", "Residential Status", "Salaries", "House Property", "PGBP", "Capital Gains", "Other Sources", "Deductions", "Set Off & Carry Forward", "Advance Tax & TDS", "Filing Returns", "Total Income Computation", "GST Intro & Supply", "Charge of GST", "Place of Supply", "Exemptions", "Value of Supply", "ITC", "Registration", "Tax Invoice", "Accounts & Records", "Payment of Tax", "TDS/TCS (GST)", "E-Way Bill", "GST Returns"] },
+        { name: "Paper 4: Cost & Mgmt Acc", topics: ["Intro to Costing", "Material Cost", "Employee Cost", "Overheads", "ABC", "Cost Sheet", "Cost Acc System", "Unit & Batch Costing", "Process Costing", "Joint & By Products", "Service Costing", "Standard Costing", "Marginal Costing", "Budgetary Control"] },
+        { name: "Paper 5: Auditing", topics: ["Nature & Scope", "Audit Strategy", "Risk Assessment", "Audit Evidence", "Audit of FS Items", "Documentation", "Completion & Review", "Audit Report", "Special Entities", "Bank Audit", "Ethics"] },
+        { name: "Paper 6: FM & SM", topics: ["FM Scope & Objectives", "Ratio Analysis", "Cost of Capital", "Capital Structure", "Leverages", "Investment Decisions", "Working Capital", "Dividend Decisions", "SM Intro", "Ext Environment Analysis", "Int Environment Analysis", "Strategic Choices", "Strategy Implementation"] }
+    ];
+
+    let checklist = {};
+    let logs = [];
+    let charts = {};
+
     function renderSyllabus() {
         const root = document.getElementById('syllabusRoot');
         root.innerHTML = '';
-
         SYLLABUS.forEach((paper, pIdx) => {
             const total = paper.topics.length;
             const done = paper.topics.filter((_, tIdx) => checklist[`${pIdx}-${tIdx}`]).length;
-            
             const div = document.createElement('div');
-            div.className = `paper-item ${paper.color}`;
-            
+            div.className = `paper-item`;
             div.innerHTML = `
                 <button class="paper-btn" onclick="toggleAccordion(this)">
                     ${paper.name}
@@ -589,50 +567,31 @@
     }
 
     function toggleTopic(pIdx, tIdx) {
-        if (!currentUserDocRef) {
-            alert("Please sign in to save your progress!");
-            const checkbox = document.getElementById(`c-${pIdx}-${tIdx}`);
-            checkbox.checked = !checkbox.checked; // Revert visually
-            return;
-        }
-
+        if (!currentUserDocRef) return;
         const key = `${pIdx}-${tIdx}`;
         if (checklist[key]) delete checklist[key];
         else checklist[key] = true;
-        
         saveToCloud();
         renderSyllabus(); 
         updateDashboard(); 
-        
         setTimeout(() => {
             const papers = document.querySelectorAll('.paper-item');
-            const btn = papers[pIdx].querySelector('.paper-btn');
-            const content = btn.nextElementSibling;
+            const content = papers[pIdx].querySelector('.paper-btn').nextElementSibling;
             content.style.maxHeight = content.scrollHeight + "px";
         }, 50);
     }
 
-    // Assigning to window so HTML inline handlers (onclick, onchange) can find them
     window.toggleAccordion = toggleAccordion;
     window.toggleTopic = toggleTopic;
 
-    // --- 5. LOGGING ---
     document.getElementById('logForm').addEventListener('submit', (e) => {
         e.preventDefault();
-
-        if (!currentUserDocRef) {
-            alert("Please sign in to log a session!");
-            return;
-        }
-
+        if (!currentUserDocRef) return;
         const date = document.getElementById('logDate').value;
         const hours = parseFloat(document.getElementById('logHours').value);
-        
         if(!date || isNaN(hours)) return;
-
         logs.push({ date, hours });
         logs.sort((a,b) => new Date(b.date) - new Date(a.date));
-        
         saveToCloud();
         renderLogs();
         updateDashboard();
@@ -650,13 +609,10 @@
         `).join('');
     }
 
-    // --- 6. DASHBOARD LOGIC ---
     function updateDashboard() {
-        // Updated calculation date
         const end = new Date("2026-07-31");
         const today = new Date();
         const daysLeft = Math.ceil((end - today)/(1000*60*60*24));
-        
         let totalTopics = 0, doneTopics = 0;
         SYLLABUS.forEach((p, pIdx) => {
             p.topics.forEach((_, tIdx) => {
@@ -664,7 +620,6 @@
                 if(checklist[`${pIdx}-${tIdx}`]) doneTopics++;
             });
         });
-
         const totalHours = logs.reduce((a, b) => a + b.hours, 0);
         const avgHours = logs.length ? (totalHours / logs.length).toFixed(1) : 0;
 
@@ -677,12 +632,23 @@
     }
 
     function updateCharts() {
-        // 1. Polar Area / Pie Chart for Subjects
         const subjectData = SYLLABUS.map((p, pIdx) => {
             const pTotal = p.topics.length;
             const pDone = p.topics.filter((_, tIdx) => checklist[`${pIdx}-${tIdx}`]).length;
             return Math.round((pDone/pTotal)*100);
         });
+
+        // Updated chart colors to match Navy & Gold theme
+        const chartColors = [
+            'rgba(10, 37, 64, 0.9)',   // Navy
+            'rgba(212, 175, 55, 0.9)', // Gold
+            'rgba(22, 58, 97, 0.8)',   // Lighter Navy
+            'rgba(230, 194, 101, 0.8)',// Lighter Gold
+            'rgba(13, 45, 80, 0.7)',   // Mid Navy
+            'rgba(191, 151, 34, 0.7)'  // Deep Gold
+        ];
+
+        const borderColor = 'rgba(10, 37, 64, 0.09)';
 
         if(charts.syllabus) charts.syllabus.destroy();
         charts.syllabus = new Chart(document.getElementById('syllabusChart'), {
@@ -691,32 +657,19 @@
                 labels: ['Acc', 'Law', 'Tax', 'Cost', 'Audit', 'FM'],
                 datasets: [{
                     data: subjectData,
-                    backgroundColor: [
-                        'rgba(72, 52, 212, 0.8)',
-                        'rgba(255, 71, 87, 0.8)',
-                        'rgba(46, 213, 115, 0.8)',
-                        'rgba(255, 165, 2, 0.8)',
-                        'rgba(156, 136, 255, 0.8)',
-                        'rgba(30, 144, 255, 0.8)'
-                    ],
-                    borderWidth: 2,
-                    borderColor: 'rgba(15, 23, 42, 0.8)'
+                    backgroundColor: chartColors,
+                    borderWidth: 1,
+                    borderColor: '#ffffff'
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: { 
-                    r: { 
-                        ticks: { display: false },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' } 
-                    } 
-                },
-                plugins: { legend: { position: 'right', labels: { boxWidth: 12, color: '#fff' } } }
+                scales: { r: { ticks: { display: false }, grid: { color: borderColor } } },
+                plugins: { legend: { position: 'right', labels: { boxWidth: 12 } } }
             }
         });
 
-        // 2. Bar Chart for History (Last 7 Days)
         const last7Days = [];
         const dayLabels = [];
         for(let i=6; i>=0; i--) {
@@ -724,7 +677,6 @@
             d.setDate(d.getDate() - i);
             const dStr = d.toISOString().split('T')[0];
             dayLabels.push(d.toLocaleDateString('en-GB', {weekday:'short'}));
-            
             const dayLog = logs.filter(l => l.date === dStr).reduce((a,b)=>a+b.hours,0);
             last7Days.push(dayLog);
         }
@@ -737,8 +689,10 @@
                 datasets: [{
                     label: 'Hours',
                     data: last7Days,
-                    backgroundColor: 'rgba(30, 144, 255, 0.8)',
-                    borderRadius: 5,
+                    backgroundColor: 'rgba(212, 175, 55, 0.7)', // Gold
+                    borderColor: 'rgba(212, 175, 55, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4,
                 }]
             },
             options: {
@@ -746,15 +700,8 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: { 
-                    y: { 
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#cbd5e1' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#cbd5e1' }
-                    }
+                    y: { beginAtZero: true, grid: { color: borderColor } },
+                    x: { grid: { display: false } }
                 }
             }
         });
@@ -762,4 +709,4 @@
 </script>
 
 </body>
-</html> 
+</html>
