@@ -321,8 +321,7 @@
             <input type="password" id="authPassword" class="styled-input" placeholder="••••••••">
         </div>
         
-        <button id="signInBtn" class="btn btn-primary" style="width: 100%; margin-bottom: 12px; margin-top: 10px;">Secure Sign In</button>
-        <button id="signUpBtn" class="btn btn-outline" style="width: 100%;">Create New Account</button>
+        <button id="signInBtn" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Secure Sign In</button>
         
         <p id="authError" class="auth-error"></p>
     </div>
@@ -403,7 +402,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyASGZIgPh9yJY6cla9sRz1Wrf98woQxw7k",
@@ -442,24 +441,6 @@
         }
         try {
             await signInWithEmailAndPassword(auth, email, pass);
-        } catch (error) {
-            authError.innerText = error.message.replace('Firebase: ', '');
-            authError.style.display = 'block';
-        }
-    });
-
-    document.getElementById('signUpBtn').addEventListener('click', async () => {
-        const email = document.getElementById('authEmail').value;
-        const pass = document.getElementById('authPassword').value;
-        authError.style.display = 'none';
-        
-        if(!email || !pass) {
-            authError.innerText = "Please enter both email and password.";
-            authError.style.display = 'block';
-            return;
-        }
-        try {
-            await createUserWithEmailAndPassword(auth, email, pass);
         } catch (error) {
             authError.innerText = error.message.replace('Firebase: ', '');
             authError.style.display = 'block';
